@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <script src="socket.io/socket.io.js"></script>
+    <title>Ace</title>
+    <style>
+      #editor {
+        position: absolute;
+        width: 600pt;
+        height: 400pt;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="editor">some text</div>
+    <script src="ace/build/src/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+      window.onload = function() {
+          var socket = new io.Socket();
+          var editor = ace.edit("editor");
+          editor.getSession().setTabSize(2);
+          editor.getSession().setUseSoftTabs(true);
+
+          socket.connect();
+
+          editor.getSession().on('change', function(e){
+            var delta = e.data;
+            var action = delta.action;
+            var range = delta.range;
+            var text = delta.text
+            socket.send({"action": action, "range": range, "text": text});
+          });
+
+      };
+    </script>
+  </body>
+
+
+</html>

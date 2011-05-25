@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <script src="socket.io/socket.io.js"></script>
+    <script>
+    </script>
+    <title>Ace</title>
+    <style>
+      #editor {
+        position: absolute;
+        width: 600pt;
+        height: 400pt;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="editor">some text</div>
+    <script src="ace/build/src/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+      window.onload = function() {
+        var socket = new io.Socket();
+        var editor = ace.edit("editor");
+        editor.getSession().setTabSize(2);
+        editor.getSession().setUseSoftTabs(true);
+
+        socket.connect();
+        socket.on('message', function(data){
+          var range = data.range;
+          var action = data.action;
+          var text = data.text;
+          if (action == "insertText") {
+            console.log(data)
+            editor.getSession().selection.setSelectionAnchor(range.start.row, range.start.column)
+            editor.getSession().selection.selectTo(range.start.row, range.start.column)
+            editor.insert(text);
+          } else {
+            if (action == "removeText" || action == "removeLines"){
+              editor.getSession().selection.setSelectionAnchor(range.start.row, range.start.column)
+              editor.getSession().selection.selectTo(range.end.row, range.end.column)
+              editor.session.remove(editor.getSelectionRange());
+            }
+          }
+          editor.renderer.showCursor(); // shows the cursor.
+        });
+
+      };
+    </script>
+  </body>
+
+
+</html>
