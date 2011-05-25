@@ -1,0 +1,19 @@
+info it worked if it ends with ok
+verbose cli [ 'node', '/usr/local/bin/npm', 'link', '.' ]
+info using npm@1.0.6
+info using node@v0.4.7
+verbose /usr/local/bin/node node symlink
+verbose config file /Users/blake/.npmrc
+verbose config file /usr/local/etc/npmrc
+info unbuild /Users/blake/Projects/pairup/v4/ace/node_modules
+verbose link symlinking /usr/local/lib/node_modules to /Users/blake/Projects/pairup/v4/ace/node_modules
+info build /Users/blake/Projects/pairup/v4/ace/node_modules
+ERR! Error: ENOENT, No such file or directory '/Users/blake/Projects/pairup/v4/ace/node_modules/package.json'
+ERR! Report this *entire* log at:
+ERR!     <http://github.com/isaacs/npm/issues>
+ERR! or email it to:
+ERR!     <npm-@googlegroups.com>
+ERR! 
+ERR! System Darwin 10.7.0
+ERR! command "node" "/usr/local/bin/npm" "link" "."
+verbose exit [ 2, true ]
